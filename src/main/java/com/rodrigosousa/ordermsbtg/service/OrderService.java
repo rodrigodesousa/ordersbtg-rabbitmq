@@ -1,10 +1,13 @@
 package com.rodrigosousa.ordermsbtg.service;
 
+import com.rodrigosousa.ordermsbtg.controller.dto.OrderResponse;
 import com.rodrigosousa.ordermsbtg.entity.OrderEntity;
 import com.rodrigosousa.ordermsbtg.entity.OrderItem;
 import com.rodrigosousa.ordermsbtg.listener.dto.OrderCreatedEvent;
 import com.rodrigosousa.ordermsbtg.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -44,5 +47,10 @@ public class OrderService {
                 .map(item -> item.preco().multiply(BigDecimal.valueOf(item.quantidade())))
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);
+    }
+
+    public Page<OrderResponse> findAllByCustomerId(Long customerId, PageRequest pageRequest){
+        return orderRepository.findAllByCustomerId(customerId, pageRequest)
+                .map(OrderResponse::fromEntity);
     }
 }
