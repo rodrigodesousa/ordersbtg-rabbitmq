@@ -10,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.messaging.support.MessageBuilder;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -30,7 +29,7 @@ class OrderCreatedListenerTest {
         @Test
         void shouldCallServiceWithCorrectParameters() {
             //Arrange
-            var event = OrderCreatedEventFactory.build();
+            var event = OrderCreatedEventFactory.buildWithOneItem();
             var message = MessageBuilder.withPayload(event).build();
 
             //Act
